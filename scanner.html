@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FaRooOn URL Scanner</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;padding:25px 16px;
+ min-height:100vh;
+ background:#081426;
+ color:#fff;
+ font-family:Arial,sans-serif;
+}
+.container{
+ max-width:650px;margin:45px auto;
+ background:#172a40;
+ border:1px solid #34516c;
+ border-radius:20px;
+ padding:25px;
+}
+h1{text-align:center;color:#54d9ba}
+.subtitle{text-align:center;color:#aebfd0;line-height:1.7}
+input{
+ width:100%;padding:16px;
+ margin:18px 0;
+ border:1px solid #49627d;
+ border-radius:10px;
+ background:#0c1b2c;
+ color:white;font-size:16px;
+}
+button{
+ width:100%;padding:15px;
+ background:#168de5;color:white;
+ border:0;border-radius:10px;
+ font-size:16px;font-weight:bold;
+}
+.result{
+ display:none;margin-top:22px;
+ padding:18px;border-radius:12px;
+ background:#0d2032;line-height:1.8;
+}
+.good{color:#65e6ad}
+.warn{color:#ffc66d}
+.bad{color:#ff8585}
+ul{padding-left:20px}
+li{margin:8px 0}
+footer{
+ text-align:center;color:#8296ac;
+ font-size:12px;margin-top:25px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>FaRooOn URL Scanner</h1>
+<p class="subtitle">
+Cyber Security Lab<br>
+Educational URL Safety Analyzer
+</p>
+
+<input id="urlInput"
+type="text"
+placeholder="https://example.com"
+autocomplete="off">
+
+<button onclick="scanURL()">SCAN URL</button>
+
+<div class="result" id="result"></div>
+
+<footer>
+FaRooOn Cyber Lab | Defensive Education
+</footer>
+</div>
+
+<script>
+function scanURL(){
+ const input=document.getElementById("urlInput").value.trim();
+ const result=document.getElementById("result");
+
+ result.style.display="block";
+
+ if(!input){
+  result.innerHTML='<span class="bad">Please enter a URL.</span>';
+  return;
+ }
+
+ let url;
+
+ try{
+  url=new URL(input);
+  if(!["http:","https:"].includes(url.protocol))
+   throw new Error("Invalid protocol");
+ }catch(e){
+  result.innerHTML='<span class="bad">Invalid URL. Include http:// or https://</span>';
+  return;
+ }
+
+ let warnings=[];
+ let positives=[];
+
+ if(url.protocol==="https:"){
+  positives.push("HTTPS encryption is present.");
+ }else{
+  warnings.push("The URL does not use HTTPS.");
+ }
+
+ if(url.username || url.password){
+  warnings.push("The URL contains user information before the domain.");
+ }
+
+ if(url.hostname.startsWith("xn--") ||
+    url.hostname.includes(".xn--")){
+  warnings.push("The domain uses Punycode encoding.");
+ }
+
+ const ipv4=/^(?:\d{1,3}\.){3}\d{1,3}$/;
+ if(ipv4.test(url.hostname)){
+  warnings.push("The address uses an IP instead of a domain name.");
+ }
+
+ const shorteners=[
+  "bit.ly","tinyurl.com","t.co",
+  "is.gd","cutt.ly","shorturl.at"
+ ];
+
+ if(shorteners.includes(url.hostname.toLowerCase())){
+  warnings.push("This is a URL shortening service.");
+ }
+
+ if(url.hostname.includes("-")){
+  warnings.push("The domain contains hyphens. Check it carefully.");
+ }
+
+ if(url.hostname.length>40){
+  warnings.push("The domain name is unusually long.");
+ }
+
+ if(url.port && !["80","443"].includes(url.port)){
+  warnings.push("The URL uses a non-standard port.");
+ }
+
+ if(/[^\x00-\x7F]/.test(url.hostname)){
+  warnings.push("The domain contains non-ASCII characters.");
+ }
+
+ if(warnings.length===0){
+  result.innerHTML=
+   '<h3 class="good">No basic warning detected</h3>'+
+   '<p>'+positives.join("<br>")+'</p>'+
+   '<p>Note: This does not prove the website is safe.</p>';
+ }else{
+  result.innerHTML=
+   '<h3 class="warn">Security warnings found</h3>'+
+   '<ul>'+warnings.map(x=>"<li>"+x+"</li>").join("")+'</ul>'+
+   '<p>HTTPS alone does not guarantee trustworthiness.</p>';
+ }
+
+ result.innerHTML+=
+  '<hr><p>Analyzed domain: <b>'+
+  escapeHTML(url.hostname)+'</b></p>'+
+  '<p>Protocol: '+escapeHTML(url.protocol)+'</p>'+
+  '<p class="warn">The scanner did not visit this URL.</p>';
+}
+
+function escapeHTML(value){
+ return value.replace(/[&<>"']/g,function(c){
+  return {
+   "&":"&amp;","<":"&lt;",">":"&gt;",
+   '"':"&quot;","'":"&#39;"
+  }[c];
+ });
+}
+</script>
+</body>
+</html>

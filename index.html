@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FaRooOn Cyber Lab</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg,#071426,#102d4a);
+  color: white;
+}
+
+.card {
+  width: 100%;
+  max-width: 440px;
+  padding: 35px 25px;
+  text-align: center;
+  background: #1b2c42;
+  border: 1px solid #34516c;
+  border-radius: 22px;
+  box-shadow: 0 20px 50px #0008;
+}
+
+.logo {
+  font-size: 55px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 8px 16px;
+  color: #55e6b2;
+  border: 1px solid #278c6a;
+  border-radius: 30px;
+  font-size: 13px;
+}
+
+h1 {
+  font-size: 27px;
+  margin-top: 24px;
+}
+
+p {
+  color: #c1d0df;
+  line-height: 1.8;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 15px;
+  border: 0;
+  border-radius: 12px;
+  background: #168de5;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+button:active {
+  background: #0865aa;
+}
+
+.result {
+  display: none;
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 12px;
+  background: #103e38;
+  color: #8cf3c6;
+  line-height: 1.8;
+}
+
+footer {
+  margin-top: 30px;
+  color: #91a4ba;
+  font-size: 12px;
+}
+</style>
+</head>
+
+<body>
+<div class="card">
+
+  <div class="logo">🛡️</div>
+
+  <span class="tag">CYBER SECURITY LAB</span>
+
+  <h1>Phishing Awareness Training</h1>
+
+  <p>
+    Learn how to identify suspicious websites
+    and protect your personal information.
+  </p>
+
+  <button onclick="startTraining()">
+    START TRAINING
+  </button>
+
+  <div class="result" id="result">
+    <h3>Training Complete!</h3>
+    Always verify website addresses.
+    Never share passwords or verification codes.
+  </div>
+
+  <footer>
+    FaRooOn Cyber Lab | Educational Project
+  </footer>
+
+</div>
+
+<script>
+function startTraining() {
+  document.getElementById("result").style.display = "block";
+}
+</script>
+
+</body>
+</html>

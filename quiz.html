@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Security Quiz</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;padding:25px;
+  background:#07111f;color:#eaf2ff;
+  font-family:Arial,sans-serif;
+}
+.container{
+  max-width:750px;margin:30px auto;
+  background:#101f33;padding:25px;
+  border-radius:16px;border:1px solid #24415f;
+}
+h1{color:#39d9ff;text-align:center}
+.subtitle{text-align:center;color:#a9bfd6}
+.question{
+  background:#172b43;padding:18px;
+  margin:18px 0;border-radius:12px;
+}
+label{
+  display:block;padding:10px;margin:8px 0;
+  background:#203b58;border-radius:8px;
+  cursor:pointer;
+}
+button{
+  width:100%;padding:14px;border:0;
+  border-radius:9px;background:#00bcd4;
+  color:#07111f;font-size:17px;font-weight:bold;
+  cursor:pointer;
+}
+#result{
+  margin-top:20px;padding:15px;
+  background:#203b58;border-radius:10px;
+  display:none;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Cyber Security Quiz</h1>
+<p class="subtitle">FaRooOn Cyber Lab - Training Edition</p>
+<p>Choose the correct answer for each question.</p>
+
+<form id="quiz">
+
+<div class="question">
+<p>1. What does HTTPS indicate?</p>
+<label><input type="radio" name="q1" value="a"> A. Encrypted connection</label>
+<label><input type="radio" name="q1" value="b"> B. A guaranteed safe website</label>
+<label><input type="radio" name="q1" value="c"> C. No internet connection</label>
+</div>
+
+<div class="question">
+<p>2. What is phishing?</p>
+<label><input type="radio" name="q2" value="a"> A. A computer update</label>
+<label><input type="radio" name="q2" value="b"> B. A trick to steal sensitive information</label>
+<label><input type="radio" name="q2" value="c"> C. A backup method</label>
+</div>
+
+<div class="question">
+<p>3. Which password is stronger?</p>
+<label><input type="radio" name="q3" value="a"> A. 123456</label>
+<label><input type="radio" name="q3" value="b"> B. password</label>
+<label><input type="radio" name="q3" value="c"> C. R8!mQ2#vL9@p</label>
+</div>
+
+<div class="question">
+<p>4. What should you do with a suspicious link?</p>
+<label><input type="radio" name="q4" value="a"> A. Open it immediately</label>
+<label><input type="radio" name="q4" value="b"> B. Check it carefully before opening</label>
+<label><input type="radio" name="q4" value="c"> C. Send it to everyone</label>
+</div>
+
+<div class="question">
+<p>5. What is two-factor authentication?</p>
+<label><input type="radio" name="q5" value="a"> A. An extra login verification step</label>
+<label><input type="radio" name="q5" value="b"> B. Two usernames</label>
+<label><input type="radio" name="q5" value="c"> C. A browser setting</label>
+</div>
+
+<div class="question">
+<p>6. What does a firewall do?</p>
+<label><input type="radio" name="q6" value="a"> A. Makes the screen brighter</label>
+<label><input type="radio" name="q6" value="b"> B. Helps control network traffic</label>
+<label><input type="radio" name="q6" value="c"> C. Deletes all files</label>
+</div>
+
+<div class="question">
+<p>7. What should you do with an unexpected attachment?</p>
+<label><input type="radio" name="q7" value="a"> A. Open it quickly</label>
+<label><input type="radio" name="q7" value="b"> B. Forward it</label>
+<label><input type="radio" name="q7" value="c"> C. Verify the sender first</label>
+</div>
+
+<div class="question">
+<p>8. What is malware?</p>
+<label><input type="radio" name="q8" value="a"> A. Malicious software</label>
+<label><input type="radio" name="q8" value="b"> B. A safe password</label>
+<label><input type="radio" name="q8" value="c"> C. A keyboard type</label>
+</div>
+
+<div class="question">
+<p>9. Why are software updates important?</p>
+<label><input type="radio" name="q9" value="a"> A. They remove the internet</label>
+<label><input type="radio" name="q9" value="b"> B. They can fix security weaknesses</label>
+<label><input type="radio" name="q9" value="c"> C. They reveal passwords</label>
+</div>
+
+<div class="question">
+<p>10. What should you do if you enter your password on a suspicious site?</p>
+<label><input type="radio" name="q10" value="a"> A. Ignore it</label>
+<label><input type="radio" name="q10" value="b"> B. Share the password</label>
+<label><input type="radio" name="q10" value="c"> C. Change it immediately on the real service</label>
+</div>
+
+<button type="button" onclick="checkQuiz()">Submit Answers</button>
+</form>
+
+<div id="result"></div>
+</div>
+
+<script>
+function checkQuiz(){
+  const answers={
+    q1:"a",q2:"b",q3:"c",q4:"b",q5:"a",
+    q6:"b",q7:"c",q8:"a",q9:"b",q10:"c"
+  };
+
+  let score=0;
+  let total=Object.keys(answers).length;
+
+  for(let q in answers){
+    const selected=document.querySelector(
+      'input[name="'+q+'"]:checked'
+    );
+    if(selected && selected.value===answers[q]){
+      score++;
+    }
+  }
+
+  const result=document.getElementById("result");
+  result.style.display="block";
+  result.innerHTML=
+    "<h2>Your Score: "+score+" / "+total+"</h2>"+
+    "<p>"+(score>=8?"Excellent work!":"Good effort! Keep learning.")+"</p>"+
+    "<p>This is an educational security awareness test.</p>";
+  result.scrollIntoView({behavior:"smooth"});
+}
+</script>
+</body>
+</html>
